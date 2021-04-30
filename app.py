@@ -8,10 +8,10 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 import plotly.graph_objs as go
 import plotly.express as px
-
 # model
 from model import prediction
 from sklearn.svm import SVR
+
 
 def get_stock_price_fig(df):
 
@@ -33,84 +33,73 @@ def get_more(df):
     return fig
 
 
-external_stylesheet = [
-    {
-        'href': 'assets/style.css',
-        'rel': 'stylesheet'
-    }
-]
-
-# create a dash instance
-app = dash.Dash(__name__, external_stylesheets=external_stylesheet)
+app = dash.Dash(
+    __name__,
+    external_stylesheets=[
+        "https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+    ])
 server = app.server
+# html layout of site
+app.layout = html.Div(
+    [
+        html.Div(
+            [
+                # Navigation
+                html.P("Welcome to the Stock Dash App!", className="start"),
+                html.Div([
+                    html.P("Input stock code: "),
+                    html.Div([
+                        dcc.Input(id="dropdown_tickers", type="text"),
+                        html.Button("Submit", id='submit'),
+                    ],
+                             className="form")
+                ],
+                         className="input-place"),
+                html.Div([
+                    dcc.DatePickerRange(id='my-date-picker-range',
+                                        min_date_allowed=dt(1995, 8, 5),
+                                        max_date_allowed=dt.now(),
+                                        initial_visible_month=dt.now(),
+                                        end_date=dt.now().date()),
+                ],
+                         className="date"),
+                html.Div([
+                    html.Button(
+                        "Stock Price", className="stock-btn", id="stock"),
+                    html.Button("Indicators",
+                                className="indicators-btn",
+                                id="indicators"),
+                    dcc.Input(id="n_days",
+                              type="text",
+                              placeholder="number of days"),
+                    html.Button(
+                        "Forecast", className="forecast-btn", id="forecast")
+                ],
+                         className="buttons"),
+                # here
+            ],
+            className="nav"),
 
-app.layout = html.Div([
-
-    html.Div(
-        [
-            html.P("Welcome to STOCK-DASH", className="start"),
-            html.Div([
-                # stock code input
-                html.P('Enter stock code: '),
-                dcc.Input(id='input', type='text'),
-                html.Button('Submit', id='button'),
-            ], className="stock_code"),
-            html.Div([
-                # date range picker input
-                html.P('Enter time duration: '),
-                dcc.DatePickerRange(
-                    id='date-picker-range',
-                    start_date=dt(2021, 1, 1),
-                    end_date=dt(2021, 3, 1),
-                )
-            ], className="date_picker"),
-            html.Div([
-                # stock price button
-                html.Button('Stock Price', id='stock_button'),
-
-                # indicator buttons
-                html.Button('Indicators', id='indicator_button'),
-
-                # number of days of forecast input
-                dcc.Input(id='number_of_days', type='text'),
-                                   
-                # forecast button
-                html.Button('Forecast', id='forecast_button'),
-            ], className="forecast"),
-        ],
-        className="inputs"),
-
-    html.Div(
-        [
-            html.Div([
-                html.Img(id="logo"),
-                html.P(id="ticker") 
-            ], 
-            className="header"),
-
-            html.Div(
-                # description
-                id="description", className="description_ticker"
-            ),
-
-            html.Div([
-                # stock price plot
-            ], id="graphs-content"),
-
-            html.Div([
-                # Indicator plot
-            ], id="main-content"),
-
-            html.Div([
-                # forecast plot
-            ], id="forecast-content"),
-        ],
-        className="content"),
-],
-className="container")
+        # content
+        html.Div(
+            [
+                html.Div(
+                    [  # header
+                        html.Img(id="logo"),
+                        html.P(id="ticker")
+                    ],
+                    className="header"),
+                html.Div(id="description", className="decription_ticker"),
+                html.Div([], id="graphs-content"),
+                html.Div([], id="main-content"),
+                html.Div([], id="forecast-content")
+            ],
+            className="content"),
+    ],
+    className="container")
 
 
-#callback for company info
+# callback for company info
 @app.callback([
     Output("description", "children"),
     Output("logo", "src"),
@@ -121,7 +110,7 @@ className="container")
 ], [Input("submit", "n_clicks")], [State("dropdown_tickers", "value")])
 def update_data(n, val):  # inpur parameter(s)
     if n == None:
-        return "Please enter a legitimate stock code to get details."
+        return "Hey there! Please enter a legitimate stock code to get details.", "https://melmagazine.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-31-at-5.47.12-PM.png", "Stonks", None, None, None
         # raise PreventUpdate
     else:
         if val == None:
