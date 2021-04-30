@@ -9,7 +9,6 @@ def prediction(stock, n_days):
     import pandas as pd
     import plotly.graph_objs as go
     import plotly.express as px
-
     # model
     from model import prediction
     from sklearn.model_selection import train_test_split
@@ -17,8 +16,8 @@ def prediction(stock, n_days):
     import numpy as np
     from sklearn.svm import SVR
     from datetime import date, timedelta
-    
     # load the data
+
     df = yf.download(stock, period='60d')
     df.reset_index(inplace=True)
     df['Day'] = df.index
@@ -27,7 +26,7 @@ def prediction(stock, n_days):
     for i in range(len(df.Day)):
         days.append([i])
 
-    # Splitting the dataset for training and testing
+    # Splitting the dataset
 
     X = days
     Y = df[['Close']]
@@ -43,7 +42,8 @@ def prediction(stock, n_days):
             'C': [0.001, 0.01, 0.1, 1, 100, 1000],
             'epsilon': [
                 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5, 10,
-                50, 100, 150, 1000],
+                50, 100, 150, 1000
+            ],
             'gamma': [0.0001, 0.001, 0.005, 0.1, 1, 3, 5, 8, 40, 100, 1000]
         },
         cv=5,
