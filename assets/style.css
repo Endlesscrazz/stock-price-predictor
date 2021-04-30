@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+}
+
+.inputs {
+  width: 25vw;
+  height: 100vh;
+  font-size: 16px;
+  background-color: #bee3db;
+
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+}
+
+.inputs > P {
+  padding-top: 5vh;
+  margin: 25px;
+  align-self: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stock_code {
+  margin: 20px 40px;
+}
+
+.stock_code > p {
+  margin-bottom: 10px;
+}
+
+.stock_code > input {
+  width: 120px;
+  padding: 12px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+}
+
+.date_picker {
+  margin: 20px 40px;
+}
+
+.date_picker > p {
+  margin-bottom: 10px;
+}
+
+.forecast {
+  margin: 20px 40px;
+}
+
+.forecast > input {
+  width: 115px;
+  padding: 12px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  margin-top: 25px;
+  box-shadow: none;
+}
+
+button {
+  background-color: #fff;
+  color: black;
+  margin: 5px;
+  margin-top: 10px;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  outline: none;
+  border: #fff solid 3px;
+  border-radius: 12px;
+}
+button:hover {
+  background-color: #b0d8d0;
+  cursor: pointer;
+}
