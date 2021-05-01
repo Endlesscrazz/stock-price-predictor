@@ -13,6 +13,7 @@ def prediction(stock, n_days):
     from model import prediction
     from sklearn.model_selection import train_test_split
     from sklearn.model_selection import GridSearchCV
+    from sklearn.metrics import mean_absolute_error as mae
     import numpy as np
     from sklearn.svm import SVR
     from datetime import date, timedelta
@@ -69,6 +70,7 @@ def prediction(stock, n_days):
 
     rbf_svr.fit(x_train, y_train)
 
+
     output_days = list()
     for i in range(1, n_days):
         output_days.append([i + x_test[-1][0]])
@@ -104,5 +106,9 @@ def prediction(stock, n_days):
         yaxis_title="Closed Price",
         # legend_title="Legend Title",
     )
+    
+    t_predict = rbf_svr.predict(x_test)
+    k = mae(t_predict, y_test)
+    print(k)
 
     return fig
