@@ -25,7 +25,7 @@ external_stylesheet = [
 ]
 
 # create a dash instance
-app = dash.Dash(__name__, external_stylesheets=external_stylesheet)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheet, meta_tags=[{'name': 'viewport','content': 'width=device-width, initial-scale=1.0, maximum-scale=1.2, minimum-scale=0.5,'}])
 server = app.server
 
 
@@ -49,8 +49,8 @@ app.layout = html.Div([
         html.Div([
             html.P("Input stock code: "),
             html.Div([
-                dcc.Input(id="dropdown_tickers", type="text", value="NFLX"),
-                html.Button("Submit", id='submit', n_clicks=1),
+                dcc.Input(id="dropdown_tickers", type="text", value="TSLA"),
+                html.Button("Submit", id='submit', n_clicks=1)
             ],
                 className="form")],
             className="input-place"),
