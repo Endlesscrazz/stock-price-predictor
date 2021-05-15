@@ -106,9 +106,5 @@ def prediction(stock, n_days):
         yaxis_title="Closed Price",
         # legend_title="Legend Title",
     )
-    
-    t_predict = rbf_svr.predict(x_test)
-    k = mae(t_predict, y_test)
-    print(k)
-
+     
     return fig
